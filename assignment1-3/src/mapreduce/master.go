@@ -109,7 +109,7 @@ func (mr *Master) run(jobName string, files []string, nreduce int,
 
 	schedule(mapPhase)
 	schedule(reducePhase)
-	// finish()
+	finish()
 	mr.merge()
 
 	debug("%s: Map/Reduce task completed\n", mr.address)

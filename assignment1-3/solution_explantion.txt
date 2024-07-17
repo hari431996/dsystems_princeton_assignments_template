@@ -1,0 +1,10 @@
+This where the steps that were followed to solve the question.
+
+
+1). First, schedule needs to be able assign work to both reduce and map. In this case we also make sure that, only after schedule is done with its job . we go ahead with reduce phase.
+
+
+2). The availabiltiy of workers is known using mr.registerchannel, where the workers are put in the channel either when the job is done or in the intial phase at the start of the worker server.
+
+
+3). Also we need to synchronise between map phase and the reduce phase .Hence we use waitgroups, at the start of each task we add one to the waitgroup . Once, the rpc call to Dotask is done we reduce one. Finally when all the tasks are done we finish that particular phase of the job.

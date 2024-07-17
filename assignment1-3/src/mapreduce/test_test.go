@@ -153,7 +153,7 @@ func cleanup(mr *Master) {
 }
 
 func TestSequentialSingle(t *testing.T) {
-	mr := Sequential("test", makeInputs(1), 1, MapFunc, ReduceFunc)
+	mr := Sequential("test", makeInputs(100), 50, MapFunc, ReduceFunc)
 	mr.Wait()
 	check(t, mr.files)
 	checkWorker(t, mr.stats)
@@ -170,7 +170,7 @@ func TestSequentialMany(t *testing.T) {
 
 func TestBasic(t *testing.T) {
 	mr := setup()
-	for i := 0; i < 2; i++ {
+	for i := 0; i < 5; i++ {
 		go RunWorker(mr.address, port("worker"+strconv.Itoa(i)),
 			MapFunc, ReduceFunc, -1)
 	}
@@ -184,7 +184,7 @@ func TestOneFailure(t *testing.T) {
 	mr := setup()
 	// Start 2 workers that fail after 10 tasks
 	go RunWorker(mr.address, port("worker"+strconv.Itoa(0)),
-		MapFunc, ReduceFunc, 10)
+		MapFunc, ReduceFunc, 1)
 	go RunWorker(mr.address, port("worker"+strconv.Itoa(1)),
 		MapFunc, ReduceFunc, -1)
 	mr.Wait()
